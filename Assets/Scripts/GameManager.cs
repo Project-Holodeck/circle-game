@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         //MULTIPLE NEALS
+        spawnRate = MainManager.instance.spawnRate;
         StartCoroutine(SpawnTarget());
     }
 
