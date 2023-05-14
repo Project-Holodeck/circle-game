@@ -9,6 +9,7 @@ public class Circle : MonoBehaviour
     private float xRange = 6.5f;
     private float yRange = 6.5f;
     private GameManager gameManager;
+    private bool destroyed = false;
 
     void Start()
     {
@@ -25,7 +26,9 @@ public class Circle : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other){
-        StartCoroutine(Delete());
+        if(!destroyed){
+            StartCoroutine(Delete());
+        }  
     }
 
     IEnumerator Delete(){
@@ -33,9 +36,24 @@ public class Circle : MonoBehaviour
         Destroy(gameObject);
     }
 
+    private void OnMouseDown(){
+        if(!gameManager.gameOver){
+            Destroy(gameObject);
+            destroyed = true;
+            if(gameObject.tag == "Enemy"){
+                gameManager.GameOver();
+            }
+            else{
+                gameManager.UpdateScore(10);
+            }
+        }
+    }
+
+
+
     // Update is called once per frame
     void Update()
     {
-
+ 
     }
 }
