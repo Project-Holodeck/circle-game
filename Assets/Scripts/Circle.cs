@@ -6,8 +6,8 @@ public class Circle : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    private float xRange = 6.5f;
-    private float yRange = 6.5f;
+    private float xRange = 6.0f;
+    private float yRange = 5.6f;
     private GameManager gameManager;
     private bool destroyed = false;
 
@@ -18,7 +18,7 @@ public class Circle : MonoBehaviour
     }
 
     Vector3 RandomSpawnPos(){
-        return new Vector3(Random.Range(-xRange, xRange), Random.Range(-yRange, yRange));
+        return new Vector3(Random.Range(-xRange, xRange), Random.Range(0, yRange));
     }
 
     void moveCircle(){

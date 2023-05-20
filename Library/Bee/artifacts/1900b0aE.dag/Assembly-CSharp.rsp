@@ -375,6 +375,7 @@
 "Assets/Scripts/Circle.cs"
 "Assets/Scripts/GameManager.cs"
 "Assets/Scripts/MainManager.cs"
+"Assets/Scripts/StoreManager.cs"
 -langversion:9.0
 
 /deterministic

@@ -42,7 +42,6 @@ public class MainManager : MonoBehaviour
     public void backBtn()
     {
         DifficultySelector.SetActive(false);
-        MainMenu.SetActive(true);
-        
+        MainMenu.SetActive(true); 
     }
 }
