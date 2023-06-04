@@ -41,10 +41,13 @@ public class Circle : MonoBehaviour
             Destroy(gameObject);
             destroyed = true;
             if(gameObject.tag == "Enemy"){
+                gameManager.playHitSoundEffect();
                 gameManager.GameOver();
             }
             else{
+                gameManager.playHitSoundEffect();
                 gameManager.UpdateScore(10);
+                gameManager.UpdateMoney(10);
             }
         }
     }

@@ -2,34 +2,49 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class StoreManager : MonoBehaviour
 {
     // Start is called before the first frame update
-    public static StoreManager instance;
-    public double spawnRate;
-    public MainManager mainManager;
-    public bool usingPistol;
+    public TextMeshProUGUI moneyText;
+    public GameObject shotgunButton;
+
+    [SerializeField]
+    private FloatSO scoreSO;
+    [SerializeField]
+    private FloatSO moneySO;
+    [SerializeField]
+    private IntegerSO weaponSO;
 
     void Start(){
-        mainManager = GameObject.Find("SceneManager").GetComponent<MainManager>();
+        UpdateMoney(0);
+        CheckMoney();
     }
 
-    void Awake()
-    {
-        instance = this;
-        DontDestroyOnLoad(gameObject);
+    private void CheckMoney(){
+        if(moneySO.Value < 50){
+            shotgunButton.SetActive(false);
+        }
+        else{
+            shotgunButton.SetActive(true);
+        }
+    }
+    
+    public void UpdateMoney(int scoreToAdd){
+        moneySO.Value += scoreToAdd;
+        moneyText.text = "MONEY: "+moneySO.Value;
     }
 
-    public void pistolButton(){
-        usingPistol = true;
-        spawnRate = mainManager.spawnRate;
+    public void PistolButton(){
+        weaponSO.Value = 0;
+        UpdateMoney(-20);
         SceneManager.LoadScene("Main");
     }
 
-    public void shotgunButton(){
-        usingPistol = false;
-        spawnRate = mainManager.spawnRate;
+    public void ShotgunButton(){
+        weaponSO.Value = 1;
+        UpdateMoney(-50);
         SceneManager.LoadScene("Main");
     }
 }

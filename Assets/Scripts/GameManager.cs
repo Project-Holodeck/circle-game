@@ -11,25 +11,39 @@ public class GameManager : MonoBehaviour
 
     public float spawnRate = 0.5f;
     public List<GameObject> circles;
-    private int score = 0;
     public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI moneyText;
     public bool gameOver = false;
     public SpriteRenderer spriteRenderer;
     public Sprite[] pistolSprites;
     public Sprite[] shotgunSprites;
-    public bool usingPistol;
+    public static GameManager instance;
+    public GameObject storeButton;
+    public AudioSource hitSoundEffect;
+
+    [SerializeField]
+    private FloatSO scoreSO;
+    [SerializeField]
+    private FloatSO moneySO;
+    [SerializeField]
+    private IntegerSO weaponSO;
 
     void Start()
     {
         //MULTIPLE NEALS
         spawnRate = MainManager.instance.spawnRate;
-        if(StoreManager.instance != null){
-            usingPistol = StoreManager.instance.usingPistol;
-        }
         StartCoroutine(SpawnTarget());
 
         //Initiating score
         UpdateScore(0);
+        UpdateMoney(0);
+        if(moneySO.Value < 20){
+            storeButton.SetActive(false);
+        }
+    }
+
+    public void playHitSoundEffect(){
+        hitSoundEffect.Play();
     }
 
     IEnumerator SpawnTarget(){
@@ -50,20 +64,28 @@ public class GameManager : MonoBehaviour
     }
 
     public void UpdateScore(int scoreToAdd){
-        this.score += scoreToAdd;
-        scoreText.text = "Score: "+score;
+        scoreSO.Value += scoreToAdd;
+        scoreText.text = "Score: "+scoreSO.Value;
+    }
+
+    public void UpdateMoney(int scoreToAdd){
+        moneySO.Value += scoreToAdd;
+        moneyText.text = "Money: "+moneySO.Value;
+        if(moneySO.Value >= 20){
+            storeButton.SetActive(true);
+        }
     }
 
     public void GameOver(){
         gameOver = true;
-        scoreText.text = "GAME OVER!\nScore: "+score;
+        scoreText.text = "GAME OVER!\nScore: "+scoreSO.Value;
     }
 
     private void ChangeGunSprite(int index){
-        if(usingPistol){
+        if(weaponSO.Value == 0){
             spriteRenderer.sprite = pistolSprites[index];
         }
-        else{
+        else if(weaponSO.Value == 1){
             spriteRenderer.sprite = shotgunSprites[index];
         }
     }
