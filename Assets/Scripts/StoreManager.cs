@@ -20,6 +20,7 @@ public class StoreManager : MonoBehaviour
     void Start(){
         UpdateMoney(0);
         CheckMoney();
+        Cursor.visible = true;
     }
 
     private void CheckMoney(){
@@ -33,7 +34,7 @@ public class StoreManager : MonoBehaviour
     
     public void UpdateMoney(int scoreToAdd){
         moneySO.Value += scoreToAdd;
-        moneyText.text = "MONEY: "+moneySO.Value;
+        moneyText.text = "MONEY: $"+moneySO.Value;
     }
 
     public void PistolButton(){

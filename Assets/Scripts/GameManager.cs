@@ -70,7 +70,7 @@ public class GameManager : MonoBehaviour
 
     public void UpdateMoney(int scoreToAdd){
         moneySO.Value += scoreToAdd;
-        moneyText.text = "Money: "+moneySO.Value;
+        moneyText.text = "Money: $"+moneySO.Value;
         if(moneySO.Value >= 20){
             storeButton.SetActive(true);
         }
