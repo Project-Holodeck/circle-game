@@ -13,10 +13,12 @@ public class GameManager : MonoBehaviour
     public List<GameObject> circles;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI moneyText;
+    public TextMeshProUGUI bulletsText;
     public bool gameOver = false;
     public SpriteRenderer spriteRenderer;
     public Sprite[] pistolSprites;
     public Sprite[] shotgunSprites;
+    public Sprite[] bananaSprites;
     public static GameManager instance;
     public GameObject storeButton;
     public AudioSource hitSoundEffect;
@@ -27,6 +29,8 @@ public class GameManager : MonoBehaviour
     private FloatSO moneySO;
     [SerializeField]
     private IntegerSO weaponSO;
+    [SerializeField]
+    public IntegerSO bulletsSO;
 
     void Start()
     {
@@ -34,9 +38,10 @@ public class GameManager : MonoBehaviour
         spawnRate = MainManager.instance.spawnRate;
         StartCoroutine(SpawnTarget());
 
-        //Initiating score
+        //Initiating
         UpdateScore(0);
         UpdateMoney(0);
+        UpdateBullets(5);
         if(moneySO.Value < 20){
             storeButton.SetActive(false);
         }
@@ -44,6 +49,11 @@ public class GameManager : MonoBehaviour
 
     public void playHitSoundEffect(){
         hitSoundEffect.Play();
+    }
+
+    public void UpdateBullets(int value){
+        bulletsSO.Value += value;
+        bulletsText.text = bulletsSO.Value+"/5";
     }
 
     IEnumerator SpawnTarget(){
@@ -88,6 +98,9 @@ public class GameManager : MonoBehaviour
         else if(weaponSO.Value == 1){
             spriteRenderer.sprite = shotgunSprites[index];
         }
+        else if(weaponSO.Value == 2){
+            spriteRenderer.sprite = bananaSprites[index];
+        }
     }
 
     private void UpdateGun(){
@@ -114,5 +127,11 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         UpdateGun();
+        if(Input.GetMouseButtonDown(0) && bulletsSO.Value != 0){
+            UpdateBullets(-1);
+        }
+        if(Input.GetKeyDown("r")){
+            UpdateBullets(5-bulletsSO.Value);
+        }
     }
 }
