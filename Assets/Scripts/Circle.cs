@@ -37,7 +37,7 @@ public class Circle : MonoBehaviour
     }
 
     private void OnMouseDown(){
-        if(!gameManager.gameOver){
+        if(!gameManager.gameOver && gameManager.bulletsSO.Value != 0){
             Destroy(gameObject);
             destroyed = true;
             if(gameObject.tag == "Enemy"){
