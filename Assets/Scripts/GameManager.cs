@@ -130,7 +130,7 @@ public class GameManager : MonoBehaviour
         if(Input.GetMouseButtonDown(0) && bulletsSO.Value != 0){
             UpdateBullets(-1);
         }
-        if(Input.GetKeyDown("r")){
+        if(Input.GetKeyDown("r") && bulletsSO.Value != 5){
             UpdateBullets(5-bulletsSO.Value);
         }
     }
