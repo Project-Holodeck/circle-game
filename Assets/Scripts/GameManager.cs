@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     public Sprite[] bananaSprites;
     public static GameManager instance;
     public GameObject storeButton;
+    public GameObject returnButton;
     public AudioSource hitSoundEffect;
 
     [SerializeField]
@@ -88,6 +89,7 @@ public class GameManager : MonoBehaviour
 
     public void GameOver(){
         gameOver = true;
+        returnButton.SetActive(true);
         scoreText.text = "GAME OVER!\nScore: "+scoreSO.Value;
     }
 
@@ -121,6 +123,10 @@ public class GameManager : MonoBehaviour
 
     public void openStore(){
         SceneManager.LoadScene("Store");
+    }
+
+    public void returnToMenu(){
+        SceneManager.LoadScene("Menu");
     }
 
     // Update is called once per frame
